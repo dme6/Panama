@@ -43,14 +43,14 @@ void get_message(char** in) {
 // currently designed for encrypting 7 bit signed ascii but can be modified in the future
 
 void encrypt(const unsigned char* key, const char* in, unsigned char* final, const size_t final_size) {
-    
+
     strcpy(final, in);
 
     int key_counter = 0;
 
     for(int i = 0; i < final_size; i++) {
-        if(final[i] + key[i] > 255) final[i] = key[key_counter] - (255 - in[i]);
-        else final[i] = in[i] + key[key_counter];
+        if(final[i] + key[key_counter] > 255) final[i] = final[i] + key[key_counter] - 255;
+        else final[i] += key[key_counter];
 
         if(++key_counter > KEY_SIZE - 1) key_counter = 0;
     }

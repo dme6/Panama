@@ -52,7 +52,36 @@ void enc_choice() {
 void dec_choice() {
 
     unsigned char key[KEY_SIZE];
-    read_data(key, KEY_DEST, sizeof(key));
+    if(!read_data(key, KEY_DEST, sizeof(key))) {
+        puts("Error reading key");
+        return;
+    }
+
+    FILE* f = fopen(ENC_DEST, "r");
+    fseek(f, 0, SEEK_END);
+    unsigned char enc[ftell(f)];
+    fclose(f);
+
+    if(!read_data(enc, ENC_DEST, sizeof(enc))) {
+        puts("Error reading encrypted message");
+        return;
+    }
+
+    unsigned char final[sizeof(enc)];
+    memset(final, 0, sizeof(final));
+
+    decrypt(key, final, enc, sizeof(enc));
+
+    puts("Decrypted Hex:");
+
+    for(int i = 0; i < sizeof(final); i++) {
+        printf("%X ", final[i]);
+    }
+
+    printf("\n");
+    puts("ASCII Encoded:");
+
+    printf("%s\n", final);
 
 }
 
