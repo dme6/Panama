@@ -99,4 +99,8 @@ int main() {
         case '2': dec_choice(); break;
         default: puts("Invalid"); break;
     }
+
+    printf("Press enter to close");
+    getchar(); // dont close terminal immediately after printing
+
 }
