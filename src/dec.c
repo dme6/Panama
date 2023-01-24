@@ -3,9 +3,9 @@
 #include "pandefs.h"
 
 int read_data(unsigned char* data, const char* dest, size_t data_size) {
-    FILE* f = fopen(dest, "r");
+    FILE* f = fopen(dest, "rb");
     if(!f) return 0;
-    fread(data, data_size, 1, f);
+    fread(data, sizeof(char), data_size, f);
     fclose(f);
     return 1;
 }

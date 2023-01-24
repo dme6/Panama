@@ -5,7 +5,7 @@
 #include "enc.h"
 #include "dec.h"
 
-void enc_choice() {
+static void enc_choice() {
 
     unsigned char key[KEY_SIZE];
     gen_key(key);
@@ -49,10 +49,10 @@ void enc_choice() {
     free(in);
 }
 
-void dec_choice() {
+static void dec_choice() {
 
-    unsigned char key[KEY_SIZE];
-    if(!read_data(key, KEY_DEST, sizeof(key))) {
+    unsigned char* key = calloc(KEY_SIZE, sizeof(char));
+    if(!read_data(key, KEY_DEST, KEY_SIZE)) {
         puts("Error reading key");
         return;
     }
@@ -92,7 +92,7 @@ int main() {
     int temp;
     do {
         temp = getchar();
-    } while(temp != EOF && temp != '\n'); // clear everything in stdin
+    } while(temp != EOF && temp != '\n'); // "flush" stdin
 
     switch(choice) {
         case '1': enc_choice(); break;

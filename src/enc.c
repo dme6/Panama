@@ -14,8 +14,8 @@ void gen_key(unsigned char* key) {
 }
 
 void save_data(unsigned char* data, const char* dest, size_t data_size) {
-    FILE* f = fopen(dest, "w");
-    fwrite(data, data_size, 1, f);
+    FILE* f = fopen(dest, "wb");
+    fwrite(data, sizeof(char), data_size, f);
     fclose(f);
 }
 
